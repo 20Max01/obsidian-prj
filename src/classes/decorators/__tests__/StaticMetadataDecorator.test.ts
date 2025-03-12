@@ -21,6 +21,22 @@ describe('Static Metadata Decorator Tests', () => {
         expect(getStaticMetadata(testInstance, MetadataSymbol)).toBe('test');
     });
 
+    it('should deliver the property key to the modifierDelegate', () => {
+        class TestClass {
+            @staticMetadata(
+                MetadataSymbol,
+                (_, __, pk) => 'test: ' + pk.toString(),
+            )
+            public testField: string;
+        }
+
+        const testInstance = new TestClass();
+
+        expect(getStaticMetadata(testInstance, MetadataSymbol)).toBe(
+            'test: testField',
+        );
+    });
+
     it('should pass the parent metadata to the modifierDelegate', () => {
         class ParentClass {
             @staticMetadata(MetadataSymbol, () => 'parent')
