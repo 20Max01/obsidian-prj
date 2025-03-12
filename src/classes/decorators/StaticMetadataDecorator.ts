@@ -17,6 +17,7 @@ function isIStaticMetadataField_<T>(
 export type ModifierDelegate<T> = (
     parentShadowField: T | undefined,
     shadowField: T | undefined,
+    propertyKey: PropertyKey,
 ) => T;
 
 /**
@@ -50,6 +51,7 @@ export function staticMetadata<T>(
         target.constructor[shadowFieldKey] = modifierDelegate(
             parentShadowField,
             targetShadowField?.value,
+            propertyKey,
         );
     };
 }
