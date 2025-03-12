@@ -1,25 +1,10 @@
 import PrjBaseData from 'src/models/Data/PrjBaseData';
+import { ModifierDelegate, staticMetadata } from './StaticMetadataDecorator';
 
 /**
  * A unique symbol used to mark properties that should be included in the {@link PrjBaseData.mergeData} method.
  */
 export const FieldConfigSymbol: unique symbol = Symbol('FieldConfig');
-
-/**
- * Represents the field configuration properties.
- */
-interface IFieldConfig_ {
-    [FieldConfigSymbol]?: IFieldConfigEntry[];
-}
-
-/**
- * Type guard to check if an object is an instance of {@link IFieldConfig_}.
- * @param obj The object to check.
- * @returns Ever `True` because the {@link FieldConfigSymbol} property is optional.
- */
-function isIFieldConfig_(obj: unknown): obj is IFieldConfig_ {
-    return true;
-}
 
 /**
  * Represents a entry in the field configuration.
@@ -38,61 +23,44 @@ interface IFieldConfigEntry {
  * - `@fieldConfig` in higher classes will overwrite the default value of the same field in lower classes.
  * - Create a {@link FieldConfigSymbol} property in the class to get the field configurations.
  */
-export function fieldConfig(defaultValue?: unknown) {
-    return function (target: unknown, propertyKey: string | symbol): void {
-        // Check if the target is an object guard the optional `FieldConfigSymbol` property.
-        if (
-            !target ||
-            typeof target !== 'object' ||
-            !(target instanceof Object) ||
-            !isIFieldConfig_(target.constructor)
-        ) {
-            throw new Error(
-                'The fieldConfig decorator can only be used on class properties.',
-            );
-        }
-
-        const parentFieldConfigs = target.constructor[FieldConfigSymbol];
-
-        // If the class does not have a `FieldConfigSymbol` property, create it.
-        if (
-            // Use of `Object.getOwnPropertyDescriptor` to get the property descriptor
-            // of the class and not the parent class.
-            !Object.getOwnPropertyDescriptor(
-                target.constructor,
-                FieldConfigSymbol,
-            ) ||
-            !target.constructor[FieldConfigSymbol]
-        ) {
-            target.constructor[FieldConfigSymbol] = [];
+export function fieldConfig(
+    defaultValue?: unknown,
+): (target: unknown, propertyKey: string | symbol) => void {
+    const fieldConfigurator: ModifierDelegate<IFieldConfigEntry[]> = (
+        parentFieldConfigs,
+        fieldConfigs,
+        propertyKey,
+    ) => {
+        if (fieldConfigs === undefined) {
+            fieldConfigs = [];
 
             // Clone the parent field configurations.
             if (parentFieldConfigs) {
-                target.constructor[FieldConfigSymbol].push(
-                    ...parentFieldConfigs,
-                );
+                fieldConfigs.push(...parentFieldConfigs);
             }
         }
 
-        const fieldConfigs = target.constructor[FieldConfigSymbol];
-
-        // Check if the field is already in the list and..
+        // Check if property key is already in the list
         const existingIndex = fieldConfigs.findIndex(
             (config: IFieldConfigEntry) => config.key === propertyKey,
         );
 
-        // ..if the field is not in the list, add it.
+        // If the property key is not in the list, add it.
         if (existingIndex == -1) {
             fieldConfigs.push({
                 key: propertyKey,
                 defaultValue,
             });
         } else {
-            // ..if the field is in the list, update it.
+            // If the property key is in the list, update it.
             fieldConfigs[existingIndex] = {
                 key: propertyKey,
                 defaultValue,
             };
         }
+
+        return fieldConfigs;
     };
+
+    return staticMetadata(FieldConfigSymbol, fieldConfigurator);
 }
