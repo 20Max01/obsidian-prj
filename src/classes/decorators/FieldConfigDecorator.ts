@@ -52,12 +52,28 @@ export function fieldConfig(defaultValue?: unknown) {
             );
         }
 
+        const parentFieldConfigs = target.constructor[FieldConfigSymbol];
+
         // If the class does not have a `FieldConfigSymbol` property, create it.
-        if (!target.constructor[FieldConfigSymbol]) {
+        if (
+            // Use of `Object.getOwnPropertyDescriptor` to get the property descriptor
+            // of the class and not the parent class.
+            !Object.getOwnPropertyDescriptor(
+                target.constructor,
+                FieldConfigSymbol,
+            ) ||
+            !target.constructor[FieldConfigSymbol]
+        ) {
             target.constructor[FieldConfigSymbol] = [];
+
+            // Clone the parent field configurations.
+            if (parentFieldConfigs) {
+                target.constructor[FieldConfigSymbol].push(
+                    ...parentFieldConfigs,
+                );
+            }
         }
 
-        // Get the field configurations for the class.
         const fieldConfigs = target.constructor[FieldConfigSymbol];
 
         // Check if the field is already in the list and..
@@ -67,12 +83,16 @@ export function fieldConfig(defaultValue?: unknown) {
 
         // ..if the field is not in the list, add it.
         if (existingIndex == -1) {
-            // The first entry is the highest class,
-            // allowing derived classes to overwrite standard values.
             fieldConfigs.push({
                 key: propertyKey,
                 defaultValue,
             });
+        } else {
+            // ..if the field is in the list, update it.
+            fieldConfigs[existingIndex] = {
+                key: propertyKey,
+                defaultValue,
+            };
         }
     };
 }
