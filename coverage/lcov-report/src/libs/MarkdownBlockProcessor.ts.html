@@ -396,12 +396,12 @@ import { IApp } from 'src/interfaces/IApp';
 import IMetadataCache from 'src/interfaces/IMetadataCache';
 import { IPrj } from 'src/interfaces/IPrj';
 import { IPrjSettings } from 'src/types/PrjSettings';
+<span class="cstat-no" title="statement not covered" >import { resolve } from 'ts-injex';</span>
 <span class="cstat-no" title="statement not covered" >import DocumentBlockRenderComponent from './BlockRenderComponents/DocumentBlockRenderComponent';</span>
 <span class="cstat-no" title="statement not covered" >import HeaderBlockRenderComponent from './BlockRenderComponents/HeaderBlockRenderComponent';</span>
 <span class="cstat-no" title="statement not covered" >import NoteBlockRenderComponent from './BlockRenderComponents/NoteBlockRenderComponent';</span>
 <span class="cstat-no" title="statement not covered" >import ProjectBlockRenderComponent from './BlockRenderComponents/ProjectBlockRenderComponent';</span>
 <span class="cstat-no" title="statement not covered" >import CustomizableRenderChild from './CustomizableRenderChild/CustomizableRenderChild';</span>
-<span class="cstat-no" title="statement not covered" >import { Resolve } from './DependencyInjection/functions/Resolve';</span>
 <span class="cstat-no" title="statement not covered" >import { HelperGeneral } from './Helper/General';</span>
 <span class="cstat-no" title="statement not covered" >import { Lifecycle } from './LifecycleManager/decorators/Lifecycle';</span>
 import { ILifecycleObject } from './LifecycleManager/interfaces/ILifecycleObject';
@@ -418,12 +418,12 @@ export default class <span class="cstat-no" title="statement not covered" ><span
      * Register the markdown block processor and update the workspace options.
      */
     public <span class="fstat-no" title="function not covered" >static </span>onLoad(): void {
-<span class="cstat-no" title="statement not covered" >        Resolve&lt;IPrj&gt;('IPrj').registerMarkdownCodeBlockProcessor(</span>
+<span class="cstat-no" title="statement not covered" >        resolve&lt;IPrj&gt;('IPrj').registerMarkdownCodeBlockProcessor(</span>
             'prj',
             MarkdownBlockProcessor.parseSource,
         );
 &nbsp;
-<span class="cstat-no" title="statement not covered" >        Resolve&lt;IApp&gt;('IApp').workspace.updateOptions();</span>
+<span class="cstat-no" title="statement not covered" >        resolve&lt;IApp&gt;('IApp').workspace.updateOptions();</span>
     }
 &nbsp;
     /**
@@ -438,7 +438,7 @@ export default class <span class="cstat-no" title="statement not covered" ><span
         ctx: MarkdownPostProcessorContext,
     ): Promise&lt;void&gt; {
         const startTime = <span class="cstat-no" title="statement not covered" >Date.now();</span>
-<span class="cstat-no" title="statement not covered" >        await Resolve&lt;IMetadataCache&gt;('IMetadataCache').waitForCacheReady();</span>
+<span class="cstat-no" title="statement not covered" >        await resolve&lt;IMetadataCache&gt;('IMetadataCache').waitForCacheReady();</span>
         const logger = <span class="cstat-no" title="statement not covered" >Logging.getLogger('BlockProcessor');</span>
 <span class="cstat-no" title="statement not covered" >        logger.trace(`DocId: ${ctx.docId}`);</span>
 &nbsp;
@@ -484,7 +484,7 @@ export default class <span class="cstat-no" title="statement not covered" ><span
         const blockContainer = <span class="cstat-no" title="statement not covered" >document.createElement('div');</span>
 <span class="cstat-no" title="statement not covered" >        singletonBlock.append(blockContainer);</span>
 <span class="cstat-no" title="statement not covered" >        blockContainer.classList.add('prj-block-container');</span>
-<span class="cstat-no" title="statement not covered" >        blockContainer.lang = Resolve&lt;IPrjSettings&gt;('IPrjSettings').language;</span>
+<span class="cstat-no" title="statement not covered" >        blockContainer.lang = resolve&lt;IPrjSettings&gt;('IPrjSettings').language;</span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >        <span class="missing-if-branch" title="if path not taken" >I</span>if (setting.styles) {</span>
 <span class="cstat-no" title="statement not covered" >            setting.styles.forEach(<span class="fstat-no" title="function not covered" >(s</span>tyle) =&gt; {</span>
@@ -503,7 +503,7 @@ export default class <span class="cstat-no" title="statement not covered" ><span
 &nbsp;
 <span class="cstat-no" title="statement not covered" >        setting.source = ctx.sourcePath;</span>
 &nbsp;
-<span class="cstat-no" title="statement not covered" >        setting.frontmatter = Resolve&lt;IMetadataCache&gt;('IMetadataCache')</span>
+<span class="cstat-no" title="statement not covered" >        setting.frontmatter = resolve&lt;IMetadataCache&gt;('IMetadataCache')</span>
             .cache.filter(<span class="fstat-no" title="function not covered" >(f</span>ile) =&gt; <span class="cstat-no" title="statement not covered" >file.file.path === ctx.sourcePath)</span>
             .first()?.metadata.frontmatter;
 <span class="cstat-no" title="statement not covered" >        setting.container = blockContainer;</span>
@@ -556,7 +556,7 @@ export default class <span class="cstat-no" title="statement not covered" ><span
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="./https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-07-24T13:19:54.234Z
+                at 2025-03-13T09:57:24.797Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

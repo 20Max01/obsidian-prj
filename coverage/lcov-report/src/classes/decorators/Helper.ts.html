@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>10/10</span>
+                <span class='fraction'>0/10</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>8/8</span>
+                <span class='fraction'>0/8</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>2/2</span>
+                <span class='fraction'>0/2</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>10/10</span>
+                <span class='fraction'>0/10</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line high'></div>
+    <div class='status-line low'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -101,31 +101,31 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">6x</span>
-<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">5x</span>
-<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">/**
  * Copies static properties from the source to the target.
@@ -133,31 +133,31 @@
  * @param source The source to copy the properties from.
  * @returns The target with the copied properties as type SourceType.
  */
-export function copyStaticProperties&lt;SourceType&gt;(
+<span class="cstat-no" title="statement not covered" >export function <span class="fstat-no" title="function not covered" >c</span>opyStaticProperties&lt;</span>SourceType&gt;(
     target: unknown,
     source: SourceType,
 ): SourceType {
-    let currentSource = source as unknown;
+    let currentSource = <span class="cstat-no" title="statement not covered" >source as unknown;</span>
 &nbsp;
-    while (currentSource &amp;&amp; currentSource !== Function.prototype) {
-        Object.getOwnPropertyNames(currentSource)
+<span class="cstat-no" title="statement not covered" >    while (currentSource &amp;&amp; currentSource !== Function.prototype) {</span>
+<span class="cstat-no" title="statement not covered" >        Object.getOwnPropertyNames(currentSource)</span>
             .concat(Object.getOwnPropertySymbols(currentSource).toString())
-            .forEach((prop) =&gt; {
-                if (prop !== 'prototype') {
-                    const descriptor = Object.getOwnPropertyDescriptor(
+            .forEach(<span class="fstat-no" title="function not covered" >(p</span>rop) =&gt; {
+<span class="cstat-no" title="statement not covered" >                <span class="missing-if-branch" title="if path not taken" >I</span>if (prop !== 'prototype') {</span>
+                    const descriptor = <span class="cstat-no" title="statement not covered" >Object.getOwnPropertyDescriptor(</span>
                         currentSource,
                         prop,
                     );
 &nbsp;
-                    if (descriptor?.configurable) {
-                        Object.defineProperty(target, prop, descriptor);
+<span class="cstat-no" title="statement not covered" >                    <span class="missing-if-branch" title="if path not taken" >I</span>if (descriptor?.configurable) {</span>
+<span class="cstat-no" title="statement not covered" >                        Object.defineProperty(target, prop, descriptor);</span>
                     }
                 }
             });
-        currentSource = Object.getPrototypeOf(currentSource);
+<span class="cstat-no" title="statement not covered" >        currentSource = Object.getPrototypeOf(currentSource);</span>
     }
 &nbsp;
-    return target as SourceType;
+<span class="cstat-no" title="statement not covered" >    return target as SourceType;</span>
 }
 &nbsp;</pre></td></tr></table></pre>
 
@@ -166,7 +166,7 @@ export function copyStaticProperties&lt;SourceType&gt;(
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="./https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-07-24T13:19:54.234Z
+                at 2025-03-13T09:57:24.797Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>
