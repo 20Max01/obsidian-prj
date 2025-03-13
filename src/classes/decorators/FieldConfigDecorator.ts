@@ -34,7 +34,8 @@ export function fieldConfig(
         if (fieldConfigs === undefined) {
             fieldConfigs = [];
 
-            // Clone the parent field configurations.
+            // Clone the parent field configurations
+            // for inheritance.
             if (parentFieldConfigs) {
                 fieldConfigs.push(...parentFieldConfigs);
             }
@@ -52,7 +53,8 @@ export function fieldConfig(
                 defaultValue,
             });
         } else {
-            // If the property key is in the list, update it.
+            // If the property key is in the list, update it
+            // to overwrite the inherited default value.
             fieldConfigs[existingIndex] = {
                 key: propertyKey,
                 defaultValue,
