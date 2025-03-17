@@ -4,7 +4,7 @@ import { TFile } from 'obsidian';
 import { Path } from 'src/classes/Path';
 import { HelperGeneral } from 'src/libs/Helper/General';
 import type { IPrjSettings } from 'src/types/PrjSettings';
-import { Inject, ITSinjex } from 'ts-injex';
+import { Inject, Register } from 'ts-injex';
 import PrjNoteData from './Data/PrjNoteData';
 import { FileModel } from './FileModel';
 import IPrjModel from './interfaces/IPrjModel';
@@ -12,6 +12,7 @@ import IPrjModel from './interfaces/IPrjModel';
 /**
  * Represents the model for a note.
  */
+@Register('NoteModel_')
 export class NoteModel
     extends FileModel<PrjNoteData>
     implements IPrjModel<PrjNoteData>
@@ -35,10 +36,9 @@ export class NoteModel
     /**
      * Creates a new instance of the note model.
      * @param file The file to create the model for.
-     * @param dependencies The optional dependencies to use.
      */
-    constructor(file: TFile | undefined, dependencies?: ITSinjex) {
-        super(file, PrjNoteData, undefined, dependencies);
+    constructor(file: TFile | undefined) {
+        super(file, PrjNoteData, undefined);
     }
 
     /**
