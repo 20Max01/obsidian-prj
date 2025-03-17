@@ -179,18 +179,23 @@ export class TagSearch
         this._suggester = new this.__IGenericSuggest(
             inputEl,
             (value: string) => {
+                // Remove the '+ ' prefix from the value. (Add new tag)
+                if (value.startsWith('+ ')) {
+                    value = value.slice(2);
+                }
                 const tag = new this._ITag_(value);
                 this._displayField?.addEntry(tag);
             },
             (input: string) => {
                 const suggestions =
-                    this._settings.getSuggestionsCallback?.(input);
+                    this._settings.getSuggestionsCallback?.(input) ?? [];
 
-                if (suggestions == null) {
+                if (suggestions.length === 0) {
                     this.__logger?.debug('The suggestions are null.');
-
-                    return [];
                 }
+
+                // Add the input as a *add new tag* suggestion.
+                suggestions.push(`+ ${input}`);
 
                 return createFuzzySearch(
                     suggestions.map((value) => ({ value })),
