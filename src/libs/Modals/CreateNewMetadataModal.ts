@@ -4,7 +4,7 @@ import type { IApp } from 'src/interfaces/IApp';
 import type { ILogger_, ILogger } from 'src/interfaces/ILogger';
 import type IMetadataCache from 'src/interfaces/IMetadataCache';
 import { IPrj } from 'src/interfaces/IPrj';
-import { IPrjDocument } from 'src/models/Data/interfaces/IPrjDocument';
+import { PrjDocumentData } from 'src/models/Data/PrjDocumentData';
 import { DocumentModel } from 'src/models/DocumentModel';
 import type { IPrjModel_ } from 'src/models/interfaces/IPrjModel';
 import type { IPrjSettings } from 'src/types/PrjSettings';
@@ -26,7 +26,7 @@ import type ITranslationService from '../TranslationService/interfaces/ITranslat
 export class CreateNewMetadataModal {
     @Inject(
         'ILogger_',
-        (x: ILogger_) => x.getLogger('AddAnnotationModal'),
+        (x: ILogger_) => x.getLogger('CreateNewMetadataModal'),
         false,
     )
     protected readonly _logger?: ILogger;
@@ -52,7 +52,8 @@ export class CreateNewMetadataModal {
     @Inject('IModal_', (modal: IModal_) => new modal())
     private readonly _modal!: IModal;
 
-    private readonly _result: Partial<Record<keyof IPrjDocument, unknown>> = {};
+    private readonly _result: Partial<Record<keyof PrjDocumentData, unknown>> =
+        {};
 
     /**
      * Creates an instance of the CreateNewMetadataModal class
@@ -89,7 +90,7 @@ export class CreateNewMetadataModal {
             ? document.setLinkedFile(linkedFile, folder)
             : undefined;
 
-        document.data = result as Partial<IPrjDocument>;
+        document.data = result as Partial<PrjDocumentData>;
 
         // No existing file, create a new one
         let template = '';
@@ -347,6 +348,13 @@ export class CreateNewMetadataModal {
                             .setRequired(true)
                             .setPlaceholder(
                                 this.__ITranslationService.get('File'),
+                            )
+                            .setValue(
+                                this.__IHelperObsidian.getActiveFile()
+                                    ?.extension === 'pdf'
+                                    ? (this.__IHelperObsidian.getActiveFile()
+                                          ?.name ?? '')
+                                    : '',
                             )
                             .addSuggestion((input) =>
                                 (
